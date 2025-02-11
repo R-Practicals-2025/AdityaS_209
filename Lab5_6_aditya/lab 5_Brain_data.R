@@ -3,7 +3,7 @@ library("moments")
 
 # Brain cancer data
 ##q1 -- import data
-file_path = "~BrainCancer.csv"
+file_path = "BrainCancer.csv"
 print(paste0("Processing ",file_path))
 
 df <-  read.csv(file = file_path, sep=',', header = T)
@@ -315,7 +315,7 @@ print(items[3][3])
 
 #14
 # Read the data from pgfull.txt
-data <- read.table("../learning/Biostat_209/lab3/pgfull.txt", header = TRUE)
+data <- read.table("pgfull.txt", header = TRUE)
 species <- data[, 1:54]
 
 max_indices <- max.col(species)
