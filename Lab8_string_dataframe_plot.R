@@ -1,5 +1,6 @@
 library(stringr)
 library(readr)
+library(moments)
 
 ## EXERCISES
 #1 Palindrome
@@ -11,10 +12,13 @@ num2 = 12321
 checkpalindome <- function(n){
   n <- as.character(n)
   rever <- sapply(lapply(strsplit(x = n, split = NULL), rev), paste, collapse="")
-  ifelse (rever==int2, yes = paste(int2," is a palindrome"), no = "This is not a palindrome")
 }  
 
-checkpalindome(num2)
+reverse_num <- checkpalindome(num2)
+
+ifelse (reverse_num==num2, yes = paste(num2," is a palindrome"), no = "This is not a palindrome")
+
+
 
 #2 #Sub string
 
@@ -33,7 +37,11 @@ nucl <- "ATTGCGCATAGTCCGGG"
 #fraction table
 freq_tab <-  table(sapply(strsplit(nucl, split = ""),paste))
 seq_split <- strsplit(nucl, split = "")
+seq_split
+freq_tab
 total <- sum(freq_tab)
+total
+
 C_fraction  <-  sum(seq_split[[1]]=="C") / total
 G_fraction  <-  sum(seq_split[[1]]=="G") / total
 paste("C fraction :",C_fraction)
@@ -81,6 +89,7 @@ check_word_length_ord <- function(sentence, index=1){
   words <- strsplit(string,split = " ")[[1]]
   sorted_array <- sort(nchar(words),decreasing = T)
   
+  #iterate thorugh each word,
   for (i in 1:length(words)) {
     word_len = length(lapply(strsplit(words[i], NULL), paste)[[1]])
     if (sorted_array[index]==word_len) {
@@ -94,7 +103,7 @@ check_word_length_ord(sentence = string, index=2)
 
 
 #6
-df = as.data.frame(read.table(file='~/NR_Aditya/course_work/sem2/Biostatistics/worldfloras.txt',header=TRUE))
+df = as.data.frame(read.table(file="~/Downloads/worldfloras.txt",header=TRUE))
 dim(df)
 class(df$Country)
 df$Continent <- as.factor(x = df$Continent)
@@ -157,7 +166,7 @@ for (i in 1:length(Continent_list)) {
 #7 Text to dataframe
 
 # Remove empty rows
-df <- read.table("~/NR_Aditya/course_work/sem2/Biostatistics/HumanBones.txt", sep = "\n", stringsAsFactors = FALSE, fill = TRUE, header = FALSE)
+df <- read.table("~/Downloads/HumanBones.txt", sep = "\n", stringsAsFactors = FALSE, fill = TRUE, header = FALSE)
 df <- df[df$V1 != "", , drop = FALSE]  # Remove empty rows
 
 # Assign categories

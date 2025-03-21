@@ -9,7 +9,8 @@ seq(6,4,-0.2) #generate a range of numbers between 6 and 4 with difference of -0
 N <- c(55,76,92,103,84,88,121,91,65,77,99)
 
 #ways of generating numbers
-df <- seq(from=0.04,by=0.01,length=11) 
+df <- seq(from=0.04,by=0.01,length=8) 
+
 df <- seq(from=0.04,by=0.01,along=N)
 df
 

@@ -1,34 +1,34 @@
 
-df = read.csv("BrainCancer.csv")
+df = read.csv("~/Documents/GitHub/AdityaS_209/lab7_mat_ifelse/BrainCancer.csv")
 df = as.data.frame(df)
+df
 
 square <- function(x) x**2
 head(df$time)
 
 # 1. Solving matrix equations and review of matrix operations
-amat <- matrix(c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120), 3, 4, byrow=TRUE)
+amat <- matrix(c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120), nrow = 3, ncol = 4, byrow=TRUE)
 amat #byrow is TRUE, the elements get filled row by row
 
 amat2 <- matrix(c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120), 3, 4, byrow=FALSE)
 amat2 #byrow is FALSE, the elements get filled column by column
 
-amat
-col_names <- c(paste("C", 1:4, sep=""))
-row_names <- c(paste("R", 1:3, sep=""))
-dimnames(amat) <- list(row_names, col_names)
+colnames(amat) <- c(paste("C", 1:4, sep=""))
+rownames(amat) <- c(paste("R", 1:3, sep=""))
 amat
 
-help(matrix)
-
+######
+#Matrix
 A <- matrix(c(2,5,7,3,1,8,9,10,1,12,5,10,4,17,15,11), 4, 4)
 B <- matrix(c(12,5,3,17,1,18,9,10,1,12,5,10,4,15,15,4), 4, 4)
 print(A)
 print(B)
 
-#matrix multiplication
+#element wise multiplication
 element_wise_mul <- A*B
 element_wise_mul
 
+#matrix multiplication
 matrix_mul <- A %*% B
 matrix_mul
 
@@ -40,12 +40,16 @@ print(Y)
 
 #outer product
 outer(X, Y)
+
+#outer
 inner_product <- X*Y #inner product
 inner_product
 
 Matrix::Diagonal(x=X) #diagonal mat
 
+#identical matrix
 identity <- matrix(data = 1,nrow = 6,ncol = 6)
+identity
 
 ele <- c(3,4,-2,4,-5,1,10,-6,5)
 A <- matrix(ele, nrow = 3, ncol = 3)
@@ -55,17 +59,23 @@ ele <- c(5,-3,13)
 B <- matrix(ele, nrow = 3, ncol = 1)
 B
 
-X = A%*%X
+X = A%*%B
 X
-X = solve(A,B)
+X = solve(A,B) #Solves the linear equation A x X = B, returning X
 X #X is an matrix-array
 
+#generates inverse matrix
 Ainv = solve(A)
+A
 Ainv
+#check if the generated matrix is the identity matrix
 
 
-check_inv <- Ainv%*%A
+check_inv <- Ainv%*%A # -1.110223e-16 and 2.775558e-17 are very close to zero.
+
 check_inv #generates identity mat
+
+#converting to eigen form
 results <- eigen(A)
 class(results) #eigen is the class
 typeof(results)
@@ -84,8 +94,11 @@ eigen_vector_3 <- results$vectors[,3]
 X_1 <- A %*% eigen_vector_1
 X_1
 
+#checking and confirms that the computed eigenvector satisfies the eigen equation
+#A * v = \lambda v
 proof_check <- eigen_value_1 * eigen_vector_1
 proof_check
+
 
 #2.1
 df$sq_gtv_time <- square(df$gtv) + df$time 
@@ -101,9 +114,8 @@ df$ki <- NULL #deleting column with NULL
 colnames(df)
 
 #3
-installed.packages("readxl")
 library("readxl")
-data <- read_excel("~/Downloads/S1_Dataset.xlsx",1)
+data <- read_excel("~/Downloads/S1_Dataset.xlsx",sheet = 1)
 
 head(data)
 colnames(data)
@@ -130,7 +142,7 @@ print(paste("unionset:" , union_set))
 intersect(A,B)
 setdiff(A,B)
 setequal(A,B)
-setA[A %in% B]
+union_set[A %in% B]
 elaborate_union <- c(setdiff(A, b), intersect(A, B), setdiff(A, B))
 elaborate_union
 setequal(elaborate_union, union(A, B))
@@ -182,7 +194,6 @@ result7 = c(11.0, 10.0, 12.2, 14.3, 23.3, 19.8, 13.4)
 
 
 # 5.7
-
 df_data <- data.frame(genename, gender, result1, result2, result3, result4, result5, result6, result7)
 colnames(df_data) <- c("GeneName", "Gender", paste("expt", 1:7, sep=""))
 datframe = df_data
@@ -194,6 +205,7 @@ expt2_les_30 <- datframe[datframe$expt2 <30,]
 
 angle = 75
 
+##check the quadrant 
 check_quad <- function(x) {
   angle <- x %% 360  # Normalize angle within 0-360
   if (angle == 0) {
@@ -257,7 +269,6 @@ test <- c(-2,-1,0,1,2)
 replace_neg(test)
 
 # 7.2 function to calculate the factorial of a number using the Stirling’s approximation
-
 factor_stirling <- function(n){
   term1 <- (n^n * exp(-n) * sqrt(2*pi*n))
   term2 <- 1 
@@ -273,7 +284,6 @@ factor_stirling <- function(n){
 factor_stirling(2)
 
 # 7.3  sum the digits of a number
-
 sum_digits <- function(x){
   result <- 0
   digits <- as.numeric(strsplit(as.character(x), "")[[1]])

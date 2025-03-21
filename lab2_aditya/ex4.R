@@ -24,6 +24,7 @@ vec[c(2,3,8)]
 vec[-1] #remove 1st element
 
 
+#remove the last element
 vec[length(vec)] #show the last element
 vec[-length(vec)]
 
@@ -50,17 +51,18 @@ x <- seq(1,10,2)
 
 #filtering values at multiple of 2
 vec
-x <-  vec[1:length(vec)%%2 ==0]
+x <-  vec[1:length(vec)%%2 ==1]
 x
 
 
 #filtering values at < 5
 x <- 0:10
 x[x<=5]
+#filtering and sum up all the values
 sum(x[x<5])
 
 #3 larget values in the vector
-largest_3 <- function(x) sort(x) [length(x), length(x)-1, length(x)-2]
+largest_3 <- function(x) sort(x) [c(length(x), length(x)-1, length(x)-2)]
 largest_3(x)
 
 #11
@@ -68,15 +70,16 @@ largest_3(x)
 which.max(x)
 which.min(x)
 
+
 #12 generate matrix with rows and columns values using column and row bind 
 cbind(1:10,10:1)
 rbind(1:10,10:1)
 
 #13 
 X <- c(1:10)
-x
+X
 y <- c(1:10*5)
-
+y
 #14
 #arthematic operators with vectors
 X+y
@@ -111,3 +114,4 @@ smallest_largets_func <- function(x){
   output <- paste("2 Smallest element are:", sort(x)[1],"and",sort(x)[2], "|","2 largest are:", sort(x)[length(x)],"and",sort(x)[length(x)-1])
   return(output)
 }
+

@@ -17,7 +17,7 @@ is.infinite(Inf)
 
 #NA values
 y <- c(4,NA,7) 
-y == "Na" 
+y == "NA" 
 is.na(y) 
 y[!is.na(y)] #to extract values which are not NA
 
@@ -43,7 +43,8 @@ reduced.frame
 #working with the array
 v <- c(1:6,NA,NA,9:12)
 v
-seq(along=v)[c(7,8)]
+seq(along=v)[c(7,9)]
+v
 is.na(v)
 which(is.na(v))
 
@@ -69,8 +70,12 @@ full.frame <-  data.frame(c1,c2,c3,c4)
 
 #generating arrat with no NA values
 full.frame[!is.na(full.frame)]
+
+full.frame
+
 #generating matrix with no NA values
 full.frame[!is.na(full.frame),]
+
 #it takes the length of is.na(full.frame) and takes total length == number of rows and 
 #add NA values in the matrix
 

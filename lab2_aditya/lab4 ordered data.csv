@@ -1,0 +1,89 @@
+"","ordered_diag","ordered_gtc"
+"1",NA,0.01
+"2","HG glioma",0.04
+"3",NA,0.11
+"4","LG glioma",0.14
+"5","HG glioma",0.16
+"6","LG glioma",0.19
+"7","HG glioma",0.19
+"8","HG glioma",0.22
+"9","HG glioma",0.28
+"10",NA,0.48
+"11","Meningioma",0.63
+"12","HG glioma",0.63
+"13","LG glioma",0.85
+"14","Meningioma",0.97
+"15","Meningioma",1.57
+"16",NA,1.82
+"17","Meningioma",2.02
+"18",NA,2.11
+"19","Meningioma",2.13
+"20","Meningioma",2.39
+"21","Meningioma",2.47
+"22","Meningioma",2.5
+"23","HG glioma",2.5
+"24","Meningioma",2.5
+"25","HG glioma",2.53
+"26","Meningioma",2.54
+"27","Meningioma",2.56
+"28","LG glioma",2.64
+"29","Meningioma",2.82
+"30","Meningioma",2.94
+"31",NA,3.12
+"32","Meningioma",3.19
+"33","Meningioma",3.63
+"34","HG glioma",3.75
+"35","Meningioma",3.81
+"36","Meningioma",4
+"37","LG glioma",4.23
+"38","Meningioma",4.72
+"39","Meningioma",4.77
+"40","Meningioma",4.82
+"41","HG glioma",5.06
+"42","Meningioma",6.11
+"43",NA,6.38
+"44","Meningioma",6.48
+"45","Meningioma",6.54
+"46","Meningioma",6.6
+"47","Meningioma",6.7
+"48",NA,6.81
+"49","Meningioma",6.93
+"50","Meningioma",7.09
+"51","Meningioma",7.26
+"52","Meningioma",7.3
+"53","HG glioma",7.59
+"54","LG glioma",7.61
+"55","Meningioma",7.95
+"56","Meningioma",8.45
+"57","Meningioma",9.18
+"58","Meningioma",9.24
+"59","LG glioma",9.58
+"60","Meningioma",9.66
+"61","HG glioma",9.95
+"62","HG glioma",10.8
+"63","HG glioma",11.38
+"64","Meningioma",11.51
+"65",NA,11.83
+"66","HG glioma",12.08
+"67","Meningioma",12.16
+"68","LG glioma",12.37
+"69",NA,12.51
+"70","Meningioma",12.63
+"71",NA,13.45
+"72","Meningioma",13.49
+"73",NA,14.26
+"74","HG glioma",14.44
+"75","HG glioma",15.45
+"76","HG glioma",19.35
+"77","HG glioma",19.81
+"78","Meningioma",20.93
+"79","HG glioma",22.87
+"80",NA,24
+"81","Meningioma",24.41
+"82",NA,24.91
+"83","Meningioma",26.31
+"84","HG glioma",29.27
+"85","LG glioma",30.41
+"86","Meningioma",31.74
+"87","HG glioma",33.69
+"88",NA,34.64

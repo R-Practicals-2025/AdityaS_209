@@ -1,10 +1,8 @@
 #1
-vec
+vec <- c("4",      "7",      "6",      "5"     , "6"      ,"7" ,     "Aditya")
 #stats
 min(vec)
-min(vec)
 max(vec)
-
 x
 sum(x)
 range(x)
@@ -15,7 +13,7 @@ colMeans(x)
 
 # Define X and Y vectors
 X <- c(1, 2, 3, 4) 
-Y <- c(5, 6, 7)   
+Y <- c(5, 6, 7,3)   
 
 # Outer product between X and Y
 Z <- X[1:4] %o% Y[1:3]
@@ -35,7 +33,7 @@ X %*% Y   # Dot product
 
 
 # Another way to calculate dot product
-sum(X * Y) # Element-wise product summed up
+sum(X, Y) # Element-wise product summed up
 
 # Cross product of X[1:4] with Z
 crossprod(X[1:4], Z)

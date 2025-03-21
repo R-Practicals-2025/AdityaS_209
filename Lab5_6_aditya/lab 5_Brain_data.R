@@ -3,7 +3,7 @@ library("moments")
 
 # Brain cancer data
 ##q1 -- import data
-file_path = "BrainCancer.csv"
+file_path = "~/Documents/GitHub/AdityaS_209/Lab5_6_aditya/BrainCancer.csv"
 print(paste0("Processing ",file_path))
 
 df <-  read.csv(file = file_path, sep=',', header = T)
@@ -92,6 +92,10 @@ df_row <-  df[c(1,3,8,9,13,14, 18, 21),]
 
 which(df$sex=="Female")
 df_fem <- df[c(1,3  ,4  ,6  ,9, 12, 13 ,15, 16, 17, 20 ,21, 23, 24, 25, 30, 31 ,33, 35, 36, 37, 40, 41, 43, 48, 50, 51 ,52 ,55, 59, 60, 61, 63 ,66 ,67 ,69, 70 ,74 ,76 ,77 ,78 ,79 ,80 ,81 ,82),]
+
+
+
+
 
 
 #4.4
@@ -229,7 +233,7 @@ print(X)
 mean(X[,5])
 var(X[4,])
 rowSums(X)
-apply(X, 1, sum) #other method of row sum
+apply(X = X, MARGIN = 1,FUN = sum) #other method of row sum
 
 
 #method of row sum
@@ -238,7 +242,7 @@ apply(X, 2, sum) #other method of row sum
 
 
 # sqrt(X)
-# apply(X,2, sqrt)
+apply(X,2, sqrt)
 
 #12.5 to 12.6
 #Calculating mean
@@ -261,6 +265,27 @@ aggregate(X, list(group), sum)
 
 
 #12.8
+
+X2<-matrix(c(1,0,2,5,3,1,1,3,1,3,3,1,0,2,2,1,0,2,1,0),nrow=4)
+print(X2)
+Y<-apply(X2,2,sample) #column wise shuffling
+print(Y)
+Y1<-apply(X2,1,sample) #row wise shuffling
+print(t(Y1))
+
+#12.9
+X3 <- rbind(X2, apply(X2,2,mean))
+print(X3)
+X4 <- cbind(X3,apply(X3,1,var))
+print(X4)
+headings <- c(paste("drug.",1:5,sep=""),"var")
+dimnames(X4)<- list(rownames(X4),headings)
+print(X4)
+headings2 <- c(paste("Trial-",1:4,sep=""),"Mean")
+rownames(X4)<-headings2
+print(X4)
+
+
 print(apply(X,2,sample))
 X <- rbind(X, apply(X,2, mean))
 print(X)
@@ -268,13 +293,22 @@ print(X)
 X <-  cbind(X, apply(X,1,var))
 heading <-  c(paste("drug.", 1:5,sep=""), 'var')
 heading
-#colnames(X) <-  heading #other way of adding colnamess)
-cols.means <- matrix(rep(cols,rep(dim(eg_sweep)[1], dim(eg_sweep)[1], dim(eg_sweep)[2])))
+
+#13 sweep
+
+
+eg_sweep<-data.frame(df$ki, df$gtv, df$time)
+
+cols<-apply(X = eg_sweep,MARGIN = 2,FUN = mean) #	MARGIN = 2: Indicates that the function (mean) should be applied to columns
+print(cols)
+
+#colnames(X) <-  heading #other way of adding colnamess
+cols.means <- matrix(rep(cols,rep(dim(eg_sweep)[1], dim(eg_sweep)[1], dim(eg_sweep)[2]))) #rep(cols, rep(dim(eg_sweep)[1], dim(eg_sweep)[2])) repeats each column mean for every row.
 cols.means
 
 nrow=dim(eg_sweep)[1]
 print(cols.means)
-eg_sweep_alt <- eg_sweep - cols.means
+eg_sweep_alt <- eg_sweep - cols.means # performing mean centering.
 print("method 1")
 print(eg_sweep_alt)
 
@@ -286,11 +320,36 @@ print(eg_sweep_alt2)
 #13.4
 #sapply -- used for vectors
 eg_sapply <- sapply(3:7, seq)
+print(eg_sapply)
 print(attributes(eg_sapply))
 print(class(eg_sapply))
 
 
 #14
+# Read the data from pgfull.txt
+data <- read.table("~/Documents/GitHub/AdityaS_209/Lab5_6_aditya/pgfull.txt", header = TRUE)
+species <- data[, 1:54]
+
+max_indices <- max.col(species)
+print(max_indices)
+
+# Extract the species names corresponding to the max value in each row
+max_species <- names(species)[max_indices]
+max_species
+
+table(max_species)
+
+species_frequency <- table(max_species) # Create a frequency table of species names
+print(species_frequency)
+min_indices <- max.col(-species)
+table(min_indices)
+
+# Extract species names corresponding to the min value in each row
+min_species <- names(species)[min_indices]
+
+# Create a frequency table of species names for minimum values
+min_species_frequency <- table(min_species)
+print(min_species_frequency)
 
 
 #15
@@ -299,7 +358,7 @@ apples <- c(4,4,5,2.5,1,3.9)
 cheese <- c(3.2-4.5i,12.8+2.2i)
 oranges <- c(T,T,F)
 chalk <- c("limestone", 'marl', 'oolite', 'CaCO3')
-# data.frame(apples,oranges, chalk)
+#data.frame(apples,oranges, chalk)
 
 #access items
 items <-  list(apples,oranges, chalk)
@@ -312,30 +371,6 @@ print(items[3][3])
 # does items[3] work the same as items[[3]] ? What’s the difference?
 # Ans - 1. In order to create a dataframe of 4 objects, there is a need of adding another vector into the list of objects
 # 2. No, items[3] does not work the same as items[[3]]. items[3] will acceess the items in the 3rd list while items[[3]] access the nested list of the list
-
-#14
-# Read the data from pgfull.txt
-data <- read.table("pgfull.txt", header = TRUE)
-species <- data[, 1:54]
-
-max_indices <- max.col(species)
-print(max_indices)
-
-# Extract the species names corresponding to the max value in each row
-max_species <- names(species)[max_indices]
-
-species_frequency <- table(max_species) # Create a frequency table of species names
-print(species_frequency)
-min_indices <- max.col(-species)
-print(min_indices)
-
-# Extract species names corresponding to the min value in each row
-min_species <- names(species)[min_indices]
-
-# Create a frequency table of species names for minimum values
-min_species_frequency <- table(min_species)
-print(min_species_frequency)
-
 
 #15.2
 #lapply - applicable to lists

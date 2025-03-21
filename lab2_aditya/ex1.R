@@ -44,7 +44,8 @@ as.numeric(seq_r)
 #use concatenate func for collapse
 #func -> collapse, uses the string and joins the characters using value given in the collapse.
 
-paste(seq_r, collapse =".") #generate sequence joined by "."
+paste(seq_r, collapse =".") #generate sequence joined by "." collapse is used by most of the function
+
 as.numeric(paste(seq_r)) #convert the sequence into integers
 paste(c("Hello", "World"), 1:10, sep = "-") #concatenate combinations of strings and range of number and join them using separators
 paste(c("Hello"), 1:10, sep = "-")  #concatenate combinations of strings and range of number and join them using separators
