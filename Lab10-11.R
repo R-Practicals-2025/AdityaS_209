@@ -499,21 +499,35 @@ z = ((norm_dice - mean(norm_dice))) / mean(norm_dice)
 hist(z, add=T, probability = T, col=rgb(0.1,0.5,1,0.6), breaks = 30)
 curve(dnorm(x, mean = mean(z), sd = sd(z)), col = "red", lwd = 2, add = TRUE)
 
+
 ##ROC
 library("pROC")
 df <- read.csv("learning/Biostat_209/lab10_11/winequality-white.csv", sep=";")
-dim(df)
-head(df)
 
-thresholds = c(6,7,8,9,10)
 
-df$df[df$quality> 6]
+#Create additional columns for quality thresholds
+thresholds <- c(6, 7, 8, 9, 10)
 
-plot.roc(df$quality,df$alcohol, #data vectors
-         main="title", #main plot title
-         legacy.axes=TRUE, # plots sensitivity against (1-specificity)
-         ci=TRUE, # plot confidence interval of AUC
-         print.auc=TRUE, # print values of AUC
-         identity.lwd=2, # linewidth of the 45 deg line (worst classifier)
-         print.thres=TRUE, # print best threshold on the graph
-)
+for (thresh in thresholds) {
+  df[[paste0("good_wine_", thresh)]] <- ifelse(df$quality >= thresh, 1, 0)
+}
+
+# Plot ROC curves for each threshold
+par(mfrow = c(2, 3))
+
+for (thresh in thresholds) {
+  good_wine_col <- paste0("good_wine_", thresh)
+  
+  roc_obj <- roc(df[[good_wine_col]], df$alcohol)
+  
+  plot.roc(
+    roc_obj,
+    main = paste("ROC Curve for Threshold >=", thresh),
+    legacy.axes = TRUE,
+    ci = TRUE,
+    print.auc = TRUE,
+    identity.lwd = 2,
+    print.thres = TRUE,
+    xlim = c(1,0)
+  )
+}
