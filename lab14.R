@@ -174,7 +174,7 @@ wilcox_res <- wilcox.test(x,y=NULL,alternative,mu=0,paired=FALSE, exact=NULL,cor
 wilcox_res
 
 
-#6
+#III 1
 
 pop1 <- c( 258.0, 271.5, 189.1, 216.5, 237.2, 222.0, 231.3, 181.7, 220.0, 179.3, 238.1, 217.7,                 
            246.2, 241.5, 233.8, 222.3, 199.2, 167.9, 216.2, 240.4, 235.3, 187.0, 233.7, 214.7,
@@ -216,7 +216,212 @@ two_sample_Z_test <- function(x1,x2,sigma_x1,sigma_x2,alpha,null="different mean
       "\nMean population 2:",mu_2)  }
 
 two_sample_Z_test(x1 = pop1,x2=pop2,sigma_x1=sigma_x1,sigma_x2,alpha)
-  
 
-#7
-t.test(x,y,alternative,mu,paired,var.equal,conf.level=0.95)
+
+#III 2 Welsch’s test:
+'a statistical test used to compare the means of two 
+independent groups when the variances and sample size of
+the two groups are not equal'
+
+#7a
+Xvr=c(4.95,5.37,4.70,4.96,4.72,5.17,5.28,5.12,5.26,5.48)
+Yvar=c(4.65,4.86,4.57,4.56,4.96,4.63,5.04,4.92,5.37,4.58,4.26,4.40)
+t.test(x=Xvar,y=Yvar,alternative="two.sided",conf.level=0.95)
+
+#7b
+data_before = c(95,106,79,71,90,79,71,77,103,103,92,63,82,76)
+data_after = c(97,116,82,81,82,86,107,86,94,91,85,98,91,87)
+
+length(data_after); length(data_before)
+var(data_after);var(data_before)
+
+#Data has same length and unequal variance
+
+t.test(x=data_before,y=data_after,alternative="two.sided",conf.level=0.95)
+# No, we do not need to add mean in the data
+
+
+#3 Two-sample proportion test
+'In a health survey, 520 out of 600 men and 550 out of 600 women
+questioned said they use antibiotics whenever fever continues for more than 2 days.
+We want to test whether there is a significant difference in the fraction of men and
+women who start taking antibotics after 2 days of fever.'
+
+#Create dataframe
+df = data.frame(c(520,550), c(600-520,600-550), row.names = c("men", "women"))
+colnames(df) <- c("more_than_2days","less_than_2days")
+df
+
+#split the dataset
+x = df[,1]
+n1 = sum(df[1,])
+n2 = sum(df[2,])
+
+prop.test(x,n=c(n1,n2),p=NULL,alternative="two.sided",correct=TRUE)
+
+
+#3b Fisher test
+# Higher-income Lower-income
+# Tobacco abuse 11 17
+# No abuse 42 39
+
+df = data.frame(c(11,17), c(42,39), row.names = c("Tobacco abuse", "No abuse"))
+colnames(df) <- c("Higher-income","Lower-income")
+
+fisher.test(df,alternative="two.sided",conf.int=TRUE,conf.level=0.95)
+
+#4 Two-sample variance test
+
+alpha = 0.05
+x = c(1067.7, 984.3,998.8,1025.9,1060.9,959.1,1013.8,
+      1047.0,987.8,1051.0,885.2,
+      1049.5,1098.2,1001.5,1011.1,991.6)
+
+y = c(957.6, 981.8, 1096.5, 984.4, 1074.3, 929.4, 1056.0,
+      1012.3, 1040.7, 1099.5,
+      1006.1, 1064.3, 865.6, 944.4, 1091.8, 952.1)
+
+
+two_sample_variance_test <- function(x,y,alpha) {
+  null = "two tailed F-distribution test"
+  var_x = var(x)
+  var_y = var(y)
+  
+  df_1 = length(x) -1
+  df_2 = length(y) -1
+  
+  test_stat = var_x/var_y
+  llim  = qf(alpha,df1 = df_1,df2 = df_2)
+  ulim = qf(1-alpha, df1 = df_1,df2 = df_2)
+  conclusion <- ifelse(llim <= test_stat && test_stat <= ulim, "Accept null hypothesis","Reject null hypothesis")  
+  pval <- pf(test_stat,df_1,df_2)
+  
+  cat("Null Hypothesis ->",null,"Test statistics vale:",test_stat,"\n\n", conclusion,"\n\nObserved p value: ",pval,
+      "p cutoff value:",alpha,"\nLower limit :", llim ,
+      "\nUpper limit:",ulim)  
+}
+
+two_sample_variance_test(x,y,alpha)
+
+
+#(5) Wilcoxon signed rank test
+Pre_therapy <- c(74, 72, 62, 58, 59, 65, 54, 63, 80, 66, 65, 64, 79, 60)
+Post_therapy <-  c(79, 55, 53, 53, 74, 55, 64, 55, 39, 44, 37, 68, 54, 54)
+
+wilcox.test(x=Pre_therapy, y = Post_therapy,alternative ="two.sided", conf.level = 0.95,paired = TRUE, correct = TRUE)
+
+
+drug <-  c(31.7,75.0,101.1,60.5,62.8,59.3,58.9,91.3,99.1,52.0,39.1)
+placebo <-c(59.3,72.7,100.5,64.7,69.0,72.7,69.6,97.4,100.6,65.1,65.7)
+
+wilcox.test(x=drug, y = placebo)
+
+
+#(7) Kruskal Wallis test:
+
+Group_1 <- c(220,214, 203, 184, 186 ,200 ,165)
+Group_2 <- c(262, 193, 225 ,200 ,164 ,266 ,179)
+Group_3 <- c(272, 192, 190, 208, 231, 235, 141)
+Group_4 <- c(190, 255, 247, 278, 230, 269, 289)
+
+df <- data.frame(Group_1,Group_2,Group_3,Group_4)
+alpha = 0.05
+
+
+summary_krus <- kruskal.test(df)
+pval <- summary_krus$p.value
+conclusion <- ifelse(alpha <= pval, "Accept null hypothesis","Reject null hypothesis")  
+cat(conclusion, pval)
+
+#(8) Chi-square GoF test:
+
+Obs <- c(32, 82, 77, 49)
+Exp <-  c(40,80,80,40)
+
+df <- length(Obs) -1
+df
+X_2 = sum((Obs-Exp)**2/ Exp)
+
+llim <- qchi(0.05, df)
+ulim <- qchi(0.95, df)
+pval <- pchi(X_2,df)
+pval
+
+conclusion <- ifelse(alpha <= 1-pval && 1-pval <= 1-alpha, "Accept null hypothesis","Reject null hypothesis")  
+cat(conclusion,": p val", 1-pval)
+
+#(1) ANOVA test
+#(a)
+df <- read.csv("~/learning/Biostat_209/lab14/titanic.csv", sep=",")
+head(df)
+
+#Encoding
+df$passenger_class <- as.integer(factor(df$passenger_class))
+
+par(mfrow=c(3,1))
+
+#PLotting histogram
+for (i in 1:3) {
+  hist(x = df$age[df$passenger_class==i], xlab="Passenger class", 
+       col="lightblue", main=paste("Histogram of passenger class ",i))
+}
+
+#Summary anova 
+anova_res <- aov(age~passenger_class,data = df)
+summary(anova_res)
+
+
+#b)
+library("dplyr")
+titanic_by_passenger_class <- group_by(df,passenger_class)
+summary <- summarise(titanic_by_passenger_class, group_mean=mean(age,na.rm=TRUE),group_sd=sd(age,na.rm=TRUE))
+summary
+cat("Yes, the standard deviations similar between the groups.")
+
+
+#(c) fit the ANOVA model
+
+"Alternate Hypo - mean age is not same across passenger classes."
+df$passenger_class <- as.factor(df$passenger_class)
+lmresults <- lm(age~passenger_class, data=df)
+lm_fitanova <- anova(lmresults)
+lm_fitanova
+
+ cat('Conclusion:\nThe observed p-val = 2.2e-16 *** which is < 0.05. Thus we reject null hypothesis. Concluding, there is atleast one passenger class that has different age distribution.')
+
+# (d)
+'A Tukey-Kramer’s test tests the null hypothesis that there is no
+difference between the population means of all pairs of groups.'
+
+TukeyHSD(aov(lmresults))
+
+
+#(e)
+kruskal.test(age~passenger_class,data=df)
+
+#(2) Cuckoo egg size problem
+df <- read.csv("~/learning/Biostat_209/lab14/cuckooeggs.csv")
+colnames(df)
+#encoding
+df$enc_host_spec <- as.integer(as.factor(df$host_species))
+df
+
+total_class <- length(unique(df$enc_host_spec))
+par(mfrow=c(2,3))
+dim(df)
+
+for (i in 1:total_class) {
+  hist(df$egg_length[df$enc_host_spec==i], xlab = "Egg length", 
+       main=paste("Histogram of egg length distribution by host species", df[df$enc_host_spec==i,][1,1]), breaks = 10)
+}
+
+cuckoogroup_by_hspecie <- group_by(df,host_species)
+summary <- summarise(cuckoogroup_by_hspecie, group_mean=mean(egg_length,na.rm=TRUE),group_sd=sd(egg_length,na.rm=TRUE))
+summary
+
+lmres <- lm(egg_length~ host_species,data = df)
+anova_res <- anova(lmres)
+anova_res
+
+tuk_res <- TukeyHSD(aov(lmres))
+summary(tuk_res)
